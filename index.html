@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SOLODA — Dimensional Stone Factory</title>
+  <link rel="icon" type="image/png" href="sol.jpg">
+  <!-- Google fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+Ethiopic:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f4f8fc;
+      --card:#207cb1;
+      --muted:#6b7280;
+      --text:#0b1220;
+      --accent:#2d7dd2;
+      --accent-2:#163f5a;
+      --radius:14px;
+      --maxw:1200px;
+      --gap:22px;
+      --shadow:0 10px 30px rgba(17,24,39,0.08);
+      --transition:250ms cubic-bezier(.2,.9,.3,1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      font-family:Poppins, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background:linear-gradient(180deg,var(--bg), #eef3f8);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:20px}
+
+    /* Header */
+    header{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:#fff;border-radius:14px;box-shadow:var(--shadow);position:sticky;top:12px;z-index:100}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{width:35px;height:25px;border-radius:25%;object-fit:cover}
+    .brand h1{font-size:18px;font-weight:700;color:var(--accent-2)}
+    .brand p{font-size:11px;color:var(--muted)}
+
+    nav ul{display:flex;gap:18px;list-style:none}
+    nav a{text-decoration:none;color:var(--accent-2);font-weight:600;padding:6px 12px;border-radius:10px;transition:var(--transition)}
+    nav a:hover{background:var(--accent);color:#fff;transform:translateY(-3px)}
+
+    .btn{background:var(--accent);color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:600;transition:var(--transition)}
+    .btn:hover{background:#1b5da3;box-shadow:0 8px 20px rgba(45,125,210,0.3);transform:translateY(-2px)}
+
+    /* Hero */
+    .hero{margin-top:20px;display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:center}
+    .hero .left{background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.55)),url('hero-bg.jpg');background-size:cover;background-position:center;padding:40px;border-radius:18px;color:#fff;box-shadow:var(--shadow)}
+    .hero h2{font-size:32px;font-weight:700;line-height:1.2;margin-bottom:12px}
+    .hero p{font-size:15px;max-width:520px;color:#f0f0f0}
+    .amharic{margin-top:10px;font-family:'Noto Sans Ethiopic',sans-serif;color:#f6f6f6;font-size:14px}
+
+    .hero .actions{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+
+    .hero .right{display:flex;flex-direction:column;gap:14px}
+    .card{background:var(--card);border-radius:14px;padding:16px;box-shadow:0 6px 18px rgba(17,24,39,0.05);transition:var(--transition)}
+    .card:hover{transform:translateY(-4px)}
+
+    /* Sections */
+    section{margin-top:40px}
+    section h3{font-size:24px;font-weight:700;color:var(--accent-2);margin-bottom:10px}
+    section p.muted{color:var(--muted)}
+
+    /* Services */
+    .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:16px}
+    .svc{background:#fff;padding:16px;border-radius:14px;box-shadow:0 8px 20px rgba(0,0,0,0.04);transition:var(--transition)}
+    .svc:hover{transform:translateY(-6px);box-shadow:0 14px 28px rgba(0,0,0,0.08)}
+    .svc strong{display:block;margin-bottom:6px;color:var(--accent-2)}
+
+    /* Gallery */
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+    .gallery img{width:100%;height:120px;object-fit:cover;border-radius:10px;cursor:pointer;transition:transform var(--transition)}
+    .gallery img:hover{transform:scale(1.05)}
+
+    /* Contact */
+    .contact-box{margin-top:20px;padding:20px;background:#fff;border-radius:14px;box-shadow:var(--shadow);text-align:center}
+    .contact-box p{font-size:16px;margin-bottom:12px}
+    .contact-box a{display:inline-block;margin-top:10px;padding:12px 22px;background:var(--accent);color:#fff;font-weight:600;border-radius:999px;text-decoration:none;transition:var(--transition)}
+    .contact-box a:hover{background:#1b5da3;box-shadow:0 8px 20px rgba(45,125,210,0.3)}
+
+    footer{margin-top:50px;padding:20px 0;text-align:center;font-size:13px;color:var(--muted)}
+
+    /* Lightbox */
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;z-index:999}
+    .lightbox img{max-width:92%;max-height:86%;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+    .lightbox.show{display:flex}
+
+    /* Mobile Floating Call Button */
+    .call-btn-mobile{position:fixed;bottom:18px;right:18px;background:var(--accent);color:#fff;padding:14px 20px;border-radius:999px;font-weight:600;box-shadow:0 6px 16px rgba(0,0,0,0.25);text-decoration:none;display:none;z-index:200}
+    .call-btn-mobile:hover{background:#1b5da3}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .hero .left{padding:30px}
+      nav ul{display:none}
+      .btn{padding:8px 14px;font-size:14px}
+      header{padding:12px 16px}
+    }
+    @media (max-width:768px){
+      .call-btn-mobile{display:inline-block}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <img src="logo-placeholder.jpg" alt="SOLODA logo">
+        <div>
+          <h1>SOLODA</h1>
+          <p>Dimensional Stone Factory • Adwa</p>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <a class="btn" href="tel:+251911719793">Call Us</a>
+    </header>
+
+    <section class="hero" id="home">
+      <div class="left">
+        <h2>WelCome To Soloda Dimensional Stone Factory!</h2>
+        <p>We are specialists in dimension stone, including granite, marble, and slabs. Tour our factory to see how these natural wonders are transformed into architectural and decorative masterpieces.</p>
+        <div class="amharic">"እንኳን ወደ ሶሎዳ ዳይሜንሽናል ድንጋይ ፋብሪካ በደህና መጡ! እኛ ግራናይት፣ እብነበረድ እና ስላብ ጨምሮ የዲምሚት ድንጋይ ልዩ ባለሙያዎች ነን። ፋብሪካችንን  እነዚህ የተፈጥሮ ድንቅ ድንጋዮች ወደ ስነ-ህንፃ የተሟላ የድንጋይ ስራ እና ጥራት ያለው አገልግሎት እንሰጣለን።</div>
+        <div class="actions">
+          <a class="btn" href="tel:+251911719793">Call Now</a>
+          <a class="btn alt" href="#gallery">View Gallery</a>
+        </div>
+      </div>
+      <div class="right">
+        <div class="card">
+          <h4>Quick Contact</h4>
+          <p >📞 +251 911 719 793</p>
+        </div>
+        <div class="card">
+          <h4>Email</h4>
+          <p >📧 filimonaregay@gmail.com</p>
+        </div>
+        <div class="card">
+          <h4>Working Hours</h4>
+          <p>Mon – Sun: 24 Hours</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h3>About Us</h3>
+      <p class="muted">SOLODA is a specializing in dimensional stone factory. We cut and polish blocks into finished slabs and custom pieces for modern construction projects.
+        
+ሶሎዳ በዳይሜንሽናል ድንጋይ ፋብሪካ ውስጥ ስፔሻሊስት ነው። ለዘመናዊ የግንባታ ፕሮጀክቶች ብሎኮችን ቆርጠን ወደ ተጠናቀቁ ንጣፎችን እና ብጁ ቁርጥራጮች እናመርታለን።
+      </p>
+    </section>
+
+    <section id="services">
+      <h3>Our Services</h3>
+      <div class="services">
+        <div class="svc"><strong>Block Cutting</strong><p class="muted">We cut blocks into slabs on special order.
+            በልዩ ትዛዝ ብሎኮችን ወደ ስላብ እንቆርጣለን።
+        </p></div>
+        <div class="svc"><strong>Polishing</strong><p class="muted">We wash slabs with our quality machines.
+            ጥራት ባላቸው ማሽኖቻችን ስላቦችን እናጥባለን።
+        </p></div>
+        <div class="svc"><strong>Brige Cuter</strong><p class="muted">we cut staircases and other custom orders.
+            ደረጃዎችን እና ሌሎች ብጁ ትዕዛዞችን እንቆርጣለን።
+        </p></div>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <h3>Gallery</h3>
+      <div class="gallery">
+        <img src="gallery1.jpg" alt="slab" data-full="gallery1.jpg">
+        <img src="gallery2.jpg" alt="cutting" data-full="gallery2.jpg">
+        <img src="gallery3.jpg" alt="polished" data-full="gallery3.jpg">
+        <img src="gallery4.jpg" alt="detail" data-full="gallery4.jpg">
+      </div>
+    </section>
+
+    <section id="contact">
+      <h3>Contact Us</h3>
+      <div class="contact-box">
+        <p>We are just one call away!</p>
+        <a href="tel:+251911719793">📞 Call +251 911 719 793</a>
+      </div>
+    </section>
+
+    <footer>
+      <p>© <span id="yr"></span> SOLODA • Designed by pHkadu Brhane</p>
+    </footer>
+  </div>
+
+  <!-- Floating Call Button -->
+  <a href="tel:+251911719793" class="call-btn-mobile">📞 Call</a>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <img id="lbImg" src="" alt="expanded image">
+  </div>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg');
+    document.querySelectorAll('.gallery img').forEach(img=>{
+      img.addEventListener('click',()=>{lbImg.src=img.dataset.full;lb.classList.add('show')})
+    });
+    lb.addEventListener('click',()=>lb.classList.remove('show'));
+  </script>
+</body>
+</html>
